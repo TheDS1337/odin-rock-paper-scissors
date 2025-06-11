@@ -1,11 +1,8 @@
 const rps = ['rock', 'paper', 'scissors'];
 
 // Returns a random integer between 0 and max (excluded)
-let getRandomInt = max => Math.floor(Math.random() * max);
-
-function getComputerChoice() {
-    return rps[getRandomInt(rps.length)];
-}
+let getRandomInt = (max) => Math.floor(Math.random() * max);
+let getComputerChoice = () => rps[getRandomInt(rps.length)];
 
 function getHumanChoice() {
     let choice = prompt("What are you playing?");
