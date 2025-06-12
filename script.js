@@ -4,76 +4,60 @@ const rps = ['rock', 'paper', 'scissors'];
 let getRandomInt = (max) => Math.floor(Math.random() * max);
 let getComputerChoice = () => rps[getRandomInt(rps.length)];
 
-function getHumanChoice() {
-    let choice = prompt("What are you playing?");
-
-    choice = choice.toLowerCase();
-
-    if( rps.includes(choice) )
-        return choice;
-
-    console.log("Invalide choice, have at it again!");
-        
-    // Try again    
-    return getHumanChoice();
-}
-
 let humanScore = 0;
 let computerScore = 0;
+let roundsPlayed = 0;
 
-function playRound(humanChoice, computerChoice) {
+function playRound(humanChoice, computerChoice)
+{
     switch( humanChoice ) {
         case 'rock':
             if( computerChoice === 'paper' ) {
-                console.log("You lose! Paper beats Rock!");
+                results.textContent = "You lose! Paper beats Rock!";
                 computerScore++;
             } else if( computerChoice === 'scissors' ) {
-                console.log("You win! Rock beats Scissors!");
+                results.textContent = "You win! Rock beats Scissors!";
                 humanScore++;
             } else
-                console.log("Tie, you read my mind.");
+                results.textContent = "Tie, you read my mind.";
 
             break;
         case 'paper':
             if( computerChoice === 'scissors' ) {
-                console.log("You lose! Scissors beats paper!");
+                results.textContent = "You lose! Scissors beats paper!";
                 computerScore++;
             } else if( computerChoice === 'rock' ) {
-                console.log("You win! Paper beats Rock!");
+                results.textContent = "You win! Paper beats Rock!";
                 humanScore++;
             } else
-                console.log("Tie, you read my mind.");
+                results.textContent = "Tie, you read my mind.";
 
             break;
 
         case 'scissors':
             if( computerChoice === 'rock' ) {
-                console.log("You lose! Rock beats Scissors!");
+                results.textContent = "You lose! Rock beats Scissors!";
                 computerScore++;
             } else if( computerChoice === 'paper' ) {
-                console.log("You win! Scissors beats Paper!");
+                results.textContent = "You win! Scissors beats Paper!";
                 humanScore++;
             } else
-                console.log("Tie, you read my mind.");
+                results.textContent = "Tie, you read my mind.";
             
             break;
     }
-}
 
-function playGame(rounds = 5) {
-    for( let i = 1; i <= 5; i++ ) {
-        let humanSelection = getHumanChoice();
-        let computerSelection = getComputerChoice();
+    roundsPlayed++;
 
-        playRound(humanSelection, computerSelection);
+    if( humanScore === 5 ) {
+        results.textContent = `After ${roundsPlayed} intense rounds, the human bean wins ${humanScore} to ${computerScore}.`;
+
+        // Reset score for the next game
+        roundsPlayed = humanScore = computerScore = 0;
+    } else if( computerScore === 5 ) {
+        results.textContent = `After ${roundsPlayed} intense rounds, Elon wins ${computerScore} to ${humanScore}.`;
+        roundsPlayed = humanScore = computerScore = 0;
     }
-
-    console.log(`After ${rounds} intense round${rounds == 1 ? '' : 's'}, the winner is....`);
-
-    if( humanScore === computerScore )
-        console.log(`None, nobody, nessuno... that was a close one!`);
-    else
-        console.log(`${humanScore > computerScore ? 'The humanoid' : 'Electron-powered giga chad'} with a score of ${humanScore > computerScore ? humanScore : computerScore} against ${humanScore > computerScore ? computerScore : humanScore}`);
 }
 
 // Quering body here for event delegation purposes
@@ -83,3 +67,5 @@ const buttons = document.querySelector("body");
 buttons.addEventListener("click", (event) => {
     playRound(event.target.id, getComputerChoice());
 });
+
+const results = document.querySelector("#results");
