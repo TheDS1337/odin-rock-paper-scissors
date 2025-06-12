@@ -76,4 +76,10 @@ function playGame(rounds = 5) {
         console.log(`${humanScore > computerScore ? 'The humanoid' : 'Electron-powered giga chad'} with a score of ${humanScore > computerScore ? humanScore : computerScore} against ${humanScore > computerScore ? computerScore : humanScore}`);
 }
 
-playGame();
+// Quering body here for event delegation purposes
+//  I just don't want to create a listener for each button element.
+const buttons = document.querySelector("body");
+
+buttons.addEventListener("click", (event) => {
+    playRound(event.target.id, getComputerChoice());
+});
